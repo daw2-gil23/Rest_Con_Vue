@@ -1,3 +1,5 @@
+
+
 <template>
   <div id="app" class="container">
     <div class="row">
@@ -5,16 +7,26 @@
         <h1>Usuarios</h1>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <tabla-usuarios :usuarios="usuarios" @eliminar-usuario="deleteUsuario" @actualizar-usuario="putUsuario" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import TablaUsuarios from './components/TablaUsuarios.vue';
+
   export default {
     name: 'app',
     data() {
       return {
         usuarios: [],
       }
+    },
+    components: {
+      TablaUsuarios,
     },
     methods: {
         async getUsuarios() {
