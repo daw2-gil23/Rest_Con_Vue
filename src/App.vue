@@ -9,6 +9,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+        <formulario-usuario @crear-usuario="postUsuario" />
         <tabla-usuarios :usuarios="usuarios" @eliminar-usuario="deleteUsuario" @actualizar-usuario="putUsuario" />
       </div>
     </div>
@@ -17,6 +18,7 @@
 
 <script>
   import TablaUsuarios from './components/TablaUsuarios.vue';
+  import FormularioUsuario from './components/FormularioUsuario.vue';
 
   export default {
     name: 'app',
@@ -27,6 +29,7 @@
     },
     components: {
       TablaUsuarios,
+      FormularioUsuario
     },
     methods: {
         async getUsuarios() {
