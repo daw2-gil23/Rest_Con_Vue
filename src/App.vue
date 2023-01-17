@@ -16,22 +16,57 @@
         usuarios: [],
       }
     },
-    methods:{
-      getUsuarios() {
-        // Método para obtener la lista de usuarios
-      },
-      postUsuario() {
-        // Método para crear un usuario
-      },
-      putUsuario() {
-        // Método para actualizar un usuario
-      },
-      deleteUsuario() {
-        // Método para borrar un usuario
-      }
+    methods: {
+        async getUsuarios() {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users');
+                this.usuarios = await response.json();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async postUsuario(usuario) {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                    method: 'POST',
+                    body: JSON.stringify(usuario),
+                    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                });
+                
+                const usuarioCreado = await response.json();
+                this.usuarios = [...this.usuarios, usuarioCreado];
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async putUsuario(usuario) {
+            try {
+                const response = await fetch(`https://jsonplaceholder.typicode.com/users/${usuario.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(usuario),
+                    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                });
+                
+                const usuarioActualizado = await response.json();
+                this.usuarios = this.usuarios.map(u => (u.id === usuario.id ? usuarioActualizado : u));
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async deleteUsuario(usuario) {
+            try {
+                await fetch(`https://jsonplaceholder.typicode.com/users/${usuario.id}`, {
+                    method: "DELETE"
+                });
+                
+                this.usuarios= this.usuarios.filter(u => u.id !== usuario.id);
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
     mounted() {
-      this.getUsuarios();
+        this.getUsuarios();
     }
   }
 </script>
